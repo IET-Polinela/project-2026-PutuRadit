@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daftar Laporan</title>
+</head>
+<body>
+    <h1>Daftar Laporan</h1>
+
+    <a href="/about/add/">Tambah Laporan</a>
+    <br><br>
+
+    {% if reports %}
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>ID</th>
+                <th>Judul</th>
+                <th>Kategori</th>
+                <th>Deskripsi</th>
+                <th>Lokasi</th>
+                <th>Status</th>
+                <th>Dibuat Pada</th>
+                <th>Aksi</th>
+            </tr>
+
+            {% for report in reports %}
+            <tr>
+                <td>{{ report.id }}</td>
+                <td>{{ report.title }}</td>
+                <td>{{ report.category }}</td>
+                <td>{{ report.description }}</td>
+                <td>{{ report.location }}</td>
+                <td>{{ report.status }}</td>
+                <td>{{ report.created_at }}</td>
+                <td>
+                    <a href="/about/update/{{ report.id }}/">Edit</a>
+                    |
+                    <a href="/about/delete/{{ report.id }}/">Hapus</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Belum ada laporan.</p>
+    {% endif %}
+</body>
+</html>
