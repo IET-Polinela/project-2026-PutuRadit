@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Contacts
+{% endblock %}
+
+{% block content %}
+
+<!-- BREADCRUMB -->
+<nav>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active">Contacts</li>
+  </ol>
+</nav>
+
+<div class="text-center">
+    <h1 class="mb-4">Contacts</h1>
+
+    <div class="card shadow-sm mx-auto" style="max-width: 400px;">
+        <div class="card-body">
+            <p class="mb-2">
+                <i class="bi bi-envelope"></i> 
+                <strong>Email:</strong> puturadit@gmail.com
+            </p>
+
+            <p>
+                <i class="bi bi-phone"></i> 
+                <strong>Phone/WhatsApp:</strong> 08123456789
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
