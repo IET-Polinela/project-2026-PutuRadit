@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Daftar Laporan{% endblock %}
+
+{% block content %}
+
+<!-- BREADCRUMB -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="{% url 'home' %}">Home</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        Reports
+    </li>
+  </ol>
+</nav>
+
+<div class="d-flex justify-content-between mb-3">
+    <h3>Daftar Laporan</h3>
+
+    {% if user.is_authenticated %}
+    <a href="{% url 'report_add' %}" class="btn btn-primary">
+        + Tambah
+    </a>
+    {% endif %}
+</div>
+
+<table class="table table-bordered table-striped">
+
+<thead class="table-dark">
+<tr>
+    <th>Judul</th>
+    <th>Deskripsi</th>
+    <th>Author</th>
+    <th>Created</th>
+
+    {% if user.is_admin %}
+    <th>Aksi</th>
+    {% endif %}
+</tr>
+</thead>
+
+<tbody>
+
+{% for report in reports %}
+<tr>
+
+    <td>{{ report.title }}</td>
+    <td>{{ report.description }}</td>
+    <td>{{ report.user.username }}</td>
+    <td>{{ report.created_at }}</td>
+
+    {% if user.is_admin %}
+    <td>
+
+        <!-- EDIT -->
+        <a href="{% url 'report_edit' report.pk %}" class="btn btn-warning btn-sm">
+            Edit
+        </a>
+
+        <!-- DELETE -->
+        <form method="POST" action="{% url 'report_delete' report.pk %}" class="d-inline" id="del-{{ report.pk }}">
+            {% csrf_token %}
+            <button type="button"
+                class="btn btn-danger btn-sm"
+                onclick="openConfirm('Yakin hapus laporan ini?', document.getElementById('del-{{ report.pk }}'))">
+                Hapus
+            </button>
+        </form>
+
+    </td>
+    {% endif %}
+
+</tr>
+{% empty %}
+
+<tr>
+    <td colspan="5" class="text-center">
+        Belum ada laporan
+    </td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% endblock %}
