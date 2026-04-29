@@ -14,21 +14,19 @@ from .forms import ReportForm
 class AdminOnlyMixin:
     def dispatch(self, request, *args, **kwargs):
 
-        # belum login
         if not request.user.is_authenticated:
             messages.error(request, "Silakan login dulu!")
             return redirect('login')
 
-        # bukan admin
         if not request.user.is_admin:
-            messages.error(request, "Akses ditolak! Hanya admin yang boleh mengakses fitur ini.")
+            messages.error(request, "Akses ditolak! Hanya admin yang boleh akses fitur ini.")
             return redirect('report_list')
 
         return super().dispatch(request, *args, **kwargs)
 
 
 # =========================
-# LIST REPORT (SEMUA USER BISA LIHAT)
+# LIST REPORT
 # =========================
 class ReportListView(ListView):
     model = Report
@@ -40,7 +38,7 @@ class ReportListView(ListView):
 
 
 # =========================
-# CREATE REPORT (ADMIN ONLY)
+# CREATE REPORT
 # =========================
 class ReportCreateView(AdminOnlyMixin, LoginRequiredMixin, CreateView):
     model = Report
@@ -51,13 +49,12 @@ class ReportCreateView(AdminOnlyMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.status = "REPORTED"
-
         messages.success(self.request, "Laporan berhasil ditambahkan!")
         return super().form_valid(form)
 
 
 # =========================
-# UPDATE REPORT (ADMIN ONLY)
+# UPDATE REPORT
 # =========================
 class ReportUpdateView(AdminOnlyMixin, LoginRequiredMixin, UpdateView):
     model = Report
@@ -65,24 +62,18 @@ class ReportUpdateView(AdminOnlyMixin, LoginRequiredMixin, UpdateView):
     template_name = 'reports/update_report.html'
     success_url = reverse_lazy('report_list')
 
-    def get_queryset(self):
-        return Report.objects.all()
-
     def form_valid(self, form):
         messages.success(self.request, "Laporan berhasil diupdate!")
         return super().form_valid(form)
 
 
 # =========================
-# DELETE REPORT (ADMIN ONLY)
+# DELETE REPORT
 # =========================
 class ReportDeleteView(AdminOnlyMixin, LoginRequiredMixin, DeleteView):
     model = Report
     template_name = 'reports/delete_report.html'
     success_url = reverse_lazy('report_list')
-
-    def get_queryset(self):
-        return Report.objects.all()
 
     def delete(self, request, *args, **kwargs):
         messages.success(request, "Laporan berhasil dihapus!")
@@ -90,7 +81,7 @@ class ReportDeleteView(AdminOnlyMixin, LoginRequiredMixin, DeleteView):
 
 
 # =========================
-# UPDATE STATUS (ADMIN ONLY)
+# UPDATE STATUS (INI INTI FITUR KAMU)
 # =========================
 class ReportUpdateStatusView(AdminOnlyMixin, LoginRequiredMixin, View):
     def post(self, request, pk):
