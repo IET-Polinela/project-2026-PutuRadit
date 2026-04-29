@@ -1,11 +1,6 @@
 from django.contrib import admin
 from .models import CustomUser
 
-<<<<<<< HEAD
-@admin.register(CustomUser)
-class CustomUserAdmin(admin.ModelAdmin):
-=======
-
 # =========================
 # ACTIONS
 # =========================
@@ -22,7 +17,12 @@ def make_admin(modeladmin, request, queryset):
 
 @admin.action(description="Reset role (USER biasa)")
 def reset_role(modeladmin, request, queryset):
-    queryset.update(is_admin=False, is_member=False, is_staff=False, is_superuser=False)
+    queryset.update(
+        is_admin=False,
+        is_member=False,
+        is_staff=False,
+        is_superuser=False
+    )
 
 
 @admin.action(description="Activate selected users")
@@ -42,16 +42,12 @@ def deactivate_users(modeladmin, request, queryset):
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
 
->>>>>>> bf6ccbf (Menambahkan sistem status laporan (VERIFIED, IN_PROGRESS, RESOLVED), aksi admin, dan pengelolaan status langsung dari halaman reports.)
     list_display = (
         'username',
         'email',
         'is_admin',
         'is_member',
         'is_staff',
-<<<<<<< HEAD
-        'is_superuser'
-=======
         'is_superuser',
         'is_active'
     )
@@ -74,5 +70,4 @@ class CustomUserAdmin(admin.ModelAdmin):
         reset_role,
         activate_users,
         deactivate_users
->>>>>>> bf6ccbf (Menambahkan sistem status laporan (VERIFIED, IN_PROGRESS, RESOLVED), aksi admin, dan pengelolaan status langsung dari halaman reports.)
     )
