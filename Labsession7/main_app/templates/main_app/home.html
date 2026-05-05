@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item active">Home</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+
+<div class="text-center">
+    <h1 class="mb-3">Selamat Datang di Nasha Town</h1>
+
+    <p class="lead">
+        Kota Nasha adalah sebuah subwilayah dan kota utama yang terletak di Pulau Lempo, Nod-Krai.
+    </p>
+
+    <p>
+        Ini adalah pemukiman tepi laut yang berfungsi sebagai pelabuhan utama dan pusat perdagangan Nod-Krai.
+    </p>
+
+    <!-- 🔥 NAV BUTTON -->
+    <div class="mt-4">
+
+        <!-- DASHBOARD (BARU) -->
+        <a href="{% url 'dashboard' %}" class="btn btn-success me-2">
+            Dashboard
+        </a>
+
+        <a href="{% url 'about' %}" class="btn btn-outline-primary me-2">
+            Ke About
+        </a>
+
+        <a href="{% url 'report_list' %}" class="btn btn-primary">
+            Lihat Reports
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}
