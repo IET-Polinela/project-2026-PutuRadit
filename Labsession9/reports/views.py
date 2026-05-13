@@ -93,27 +93,44 @@ class ReportDeleteView(AdminOnlyMixin, LoginRequiredMixin, DeleteView):
 # UPDATE STATUS
 # =========================
 class ReportUpdateStatusView(AdminOnlyMixin, LoginRequiredMixin, View):
+
     def post(self, request, pk):
 
         report = get_object_or_404(Report, pk=pk)
+
         new_status = request.POST.get('status')
 
         valid_transitions = {
+            "DRAFT": ["REPORTED"],
             "REPORTED": ["VERIFIED"],
             "VERIFIED": ["IN_PROGRESS"],
             "IN_PROGRESS": ["RESOLVED"],
             "RESOLVED": []
         }
 
+        # validasi status
         if new_status in valid_transitions.get(report.status, []):
+
             report.status = new_status
+
+            # otomatis isi reporter kalau kosong
+            if not report.reporter:
+                report.reporter = request.user
+
             report.save()
-            messages.success(request, f"Status diubah ke {new_status}")
+
+            messages.success(
+                request,
+                f"Status laporan berhasil diubah ke {new_status}"
+            )
+
         else:
-            messages.error(request, "Perubahan status tidak valid!")
+            messages.error(
+                request,
+                "Perubahan status tidak valid!"
+            )
 
         return redirect('report_list')
-
 
 # =========================
 # API DETAIL REPORT (MODAL)
