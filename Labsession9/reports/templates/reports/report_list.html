@@ -7,51 +7,136 @@
 <style>
     body{
         background:
-            linear-gradient(
-                rgba(5,10,25,0.68),
-                rgba(5,10,25,0.82)
-            ),
+            linear-gradient(rgba(5,10,25,0.68), rgba(5,10,25,0.84)),
             url('https://c.tenor.com/lPsMNpUunr4AAAAd/minecraft-aesthetic-background.gif')
             center center / cover no-repeat fixed !important;
     }
-</style>
 
-<style>
-    .reports-wrap {
-        padding-bottom: 50px;
+    .reports-wrap{
+        padding-bottom: 55px;
         animation: pixelUp .7s ease;
     }
 
-    .pixel-breadcrumb {
+    .pixel-breadcrumb{
         margin-bottom: 18px;
-        font-weight: 800;
+        font-weight: 900;
         text-transform: uppercase;
     }
 
-    .pixel-breadcrumb a {
+    .pixel-breadcrumb a{
         color: #78ff5c;
         text-decoration: none;
     }
 
-    .pixel-title {
+    .hero-panel{
+        background: rgba(12, 12, 12, 0.88);
+        border: 5px solid #111;
+        box-shadow: 10px 10px 0 #000;
+        padding: 24px;
+        margin-bottom: 26px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .pixel-title{
         font-family: 'Cinzel', serif;
-        font-size: 2.3rem;
+        font-size: 2.4rem;
         font-weight: 900;
         text-transform: uppercase;
         color: white;
         text-shadow: 4px 4px 0 #000;
     }
 
-    .pixel-search {
-        background: rgba(18,18,18,0.9) !important;
+    .pixel-subtitle{
+        color: #dcdcdc;
+        font-weight: 700;
+        margin-top: 6px;
+        margin-bottom: 0;
+    }
+
+    .pixel-add{
+        background: #2e8b24 !important;
+        color: white !important;
+        border: 4px solid #111 !important;
+        border-radius: 0 !important;
+        box-shadow: 5px 5px 0 #000;
+        font-weight: 900;
+        text-transform: uppercase;
+        padding: 10px 18px;
+        text-decoration: none;
+        transition: .15s ease;
+        white-space: nowrap;
+    }
+
+    .pixel-add:hover{
+        background: #78ff5c !important;
+        color: #111 !important;
+        transform: translateY(-2px);
+    }
+
+    .stat-card{
+        background: rgba(18,18,18,0.93);
+        border: 4px solid #111;
+        box-shadow: 6px 6px 0 #000;
+        padding: 15px;
+        color: white;
+        height: 100%;
+    }
+
+    .stat-label{
+        font-size: .72rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        color: #cfcfcf;
+    }
+
+    .stat-number{
+        font-size: 2rem;
+        font-weight: 900;
+        line-height: 1;
+        text-shadow: 3px 3px 0 #000;
+    }
+
+    .stat-icon{
+        font-size: 1.5rem;
+    }
+
+    .pixel-search{
+        background: rgba(18,18,18,0.92) !important;
         border: 4px solid #111 !important;
         border-radius: 0 !important;
         color: white !important;
         box-shadow: 6px 6px 0 #000;
         font-weight: 800;
+        padding: 12px 14px;
     }
 
-    .pixel-table-box {
+    .pixel-search::placeholder{
+        color: #bdbdbd;
+    }
+
+    .filter-chip{
+        border: 3px solid #111;
+        border-radius: 0;
+        background: rgba(25,25,25,0.95);
+        color: white;
+        box-shadow: 4px 4px 0 #000;
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: .78rem;
+        padding: 8px 12px;
+        margin: 0 6px 10px 0;
+        transition: .15s ease;
+    }
+
+    .filter-chip:hover,
+    .filter-chip.active{
+        background: #78ff5c;
+        color: #111;
+        transform: translateY(-2px);
+    }
+
+    .pixel-table-box{
         background: rgba(18,18,18,0.92);
         border: 5px solid #111;
         box-shadow: 10px 10px 0 #000;
@@ -59,12 +144,12 @@
         animation: pixelUp .9s ease;
     }
 
-    .pixel-table {
+    .pixel-table{
         margin-bottom: 0;
         border-collapse: collapse;
     }
 
-    .pixel-table thead th {
+    .pixel-table thead th{
         background: #1f1f1f !important;
         color: white !important;
         border: 3px solid #111 !important;
@@ -75,7 +160,7 @@
         white-space: nowrap;
     }
 
-    .pixel-table tbody td {
+    .pixel-table tbody td{
         background: rgba(20,20,20,0.92) !important;
         color: white !important;
         border: 3px solid #111 !important;
@@ -83,15 +168,15 @@
         vertical-align: middle;
     }
 
-    .pixel-table tbody tr {
+    .pixel-table tbody tr{
         transition: .2s ease;
     }
 
-    .pixel-table tbody tr:hover td {
+    .pixel-table tbody tr:hover td{
         background: #2b2b2b !important;
     }
 
-    .pixel-badge {
+    .pixel-badge{
         display: inline-block;
         border-radius: 0;
         border: 3px solid #111;
@@ -100,30 +185,16 @@
         font-weight: 900;
         text-transform: uppercase;
         box-shadow: 3px 3px 0 #000;
+        white-space: nowrap;
     }
 
-    .status-draft {
-        background: #6c757d;
-    }
+    .status-draft{ background: #6c757d; }
+    .status-reported{ background: #ffc928; color: #111; }
+    .status-verified{ background: #39a9ff; }
+    .status-progress{ background: #b967ff; }
+    .status-resolved{ background: #2ecc71; color: #111; }
 
-    .status-reported {
-        background: #ffc928;
-        color: #111;
-    }
-
-    .status-verified {
-        background: #39a9ff;
-    }
-
-    .status-progress {
-        background: #b967ff;
-    }
-
-    .status-resolved {
-        background: #2ecc71;
-    }
-
-    .pixel-btn {
+    .pixel-btn{
         border-radius: 0 !important;
         border: 3px solid #111 !important;
         box-shadow: 3px 3px 0 #000;
@@ -134,47 +205,86 @@
         transition: .15s ease;
     }
 
-    .pixel-btn:hover {
+    .pixel-btn:hover{
         transform: translateY(-2px);
         box-shadow: 5px 5px 0 #000;
     }
 
-    .pixel-add {
-        background: #2e8b24 !important;
-        color: white !important;
-        border: 4px solid #111 !important;
-        border-radius: 0 !important;
-        box-shadow: 5px 5px 0 #000;
+    .activity-box{
+        background: rgba(18,18,18,0.93);
+        border: 5px solid #111;
+        box-shadow: 10px 10px 0 #000;
+        padding: 18px;
+        margin-top: 24px;
+        color: white;
+    }
+
+    .activity-title{
+        font-family: 'Cinzel', serif;
         font-weight: 900;
         text-transform: uppercase;
-        padding: 10px 18px;
-        text-decoration: none;
+        text-shadow: 3px 3px 0 #000;
+        margin-bottom: 14px;
     }
 
-    .pixel-add:hover {
-        background: #78ff5c !important;
-        color: #111 !important;
+    .activity-item{
+        border: 3px solid #111;
+        background: rgba(35,35,35,0.9);
+        padding: 10px 12px;
+        margin-bottom: 10px;
+        box-shadow: 4px 4px 0 #000;
+        font-weight: 800;
     }
 
-    .pixel-modal .modal-content {
+    .pagination-pixel{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 22px;
+        color: white;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+
+    .page-btn{
+        background: #1f1f1f;
+        color: white;
+        border: 4px solid #111;
+        box-shadow: 5px 5px 0 #000;
+        padding: 9px 18px;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+
+    .page-btn:hover:not(:disabled){
+        background: #78ff5c;
+        color: #111;
+    }
+
+    .page-btn:disabled{
+        opacity: .45;
+        cursor: not-allowed;
+    }
+
+    .pixel-modal .modal-content{
         border-radius: 0 !important;
         border: 5px solid #111 !important;
         background: rgba(18,18,18,0.96) !important;
         box-shadow: 10px 10px 0 #000;
+        color: white;
     }
 
-    .empty-row {
+    .empty-row{
         text-align: center;
         padding: 24px !important;
     }
 
-    @keyframes pixelUp {
-        from {
+    @keyframes pixelUp{
+        from{
             opacity: 0;
             transform: translateY(35px);
         }
-
-        to {
+        to{
             opacity: 1;
             transform: translateY(0);
         }
@@ -188,24 +298,86 @@
         <span class="text-white"> / Reports</span>
     </nav>
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="pixel-title mb-0">Daftar Laporan</h3>
+    <div class="hero-panel">
+        <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap">
+            <div>
+                <h3 class="pixel-title mb-0">Daftar Laporan Kota</h3>
+                <p class="pixel-subtitle">Citizen report database & monitoring system.</p>
+            </div>
 
-        {% if user.is_authenticated %}
-            <a href="{% url 'report_add' %}" class="pixel-add">
-                + Tambah
-            </a>
-        {% endif %}
+            {% if user.is_authenticated %}
+                <a href="{% url 'report_add' %}" class="pixel-add">
+                    + Tambah
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div class="stat-label">Total Report</div>
+                        <div class="stat-number" id="totalCount">0</div>
+                    </div>
+                    <div class="stat-icon">📋</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div class="stat-label">Reported</div>
+                        <div class="stat-number" id="reportedCount">0</div>
+                    </div>
+                    <div class="stat-icon">🟨</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div class="stat-label">In Progress</div>
+                        <div class="stat-number" id="progressCount">0</div>
+                    </div>
+                    <div class="stat-icon">🟪</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div class="stat-label">Resolved</div>
+                        <div class="stat-number" id="resolvedCount">0</div>
+                    </div>
+                    <div class="stat-icon">🟩</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <input type="text"
            id="searchInput"
-           class="form-control pixel-search mb-4"
-           placeholder="Cari laporan...">
+           class="form-control pixel-search mb-3"
+           placeholder="Cari laporan berdasarkan judul, deskripsi, atau lokasi...">
+
+    <div class="mb-3">
+        <button type="button" class="filter-chip active" data-filter="ALL">All</button>
+        <button type="button" class="filter-chip" data-filter="REPORTED">Reported</button>
+        <button type="button" class="filter-chip" data-filter="VERIFIED">Verified</button>
+        <button type="button" class="filter-chip" data-filter="IN_PROGRESS">In Progress</button>
+        <button type="button" class="filter-chip" data-filter="RESOLVED">Resolved</button>
+    </div>
 
     <div class="pixel-table-box">
         <table class="table pixel-table">
-
             <thead>
             <tr>
                 <th>Judul</th>
@@ -221,11 +393,9 @@
             </thead>
 
             <tbody id="reportTable">
-
             {% for report in reports %}
-            <tr>
+            <tr data-status="{{ report.status }}">
                 <td>{{ report.title }}</td>
-
                 <td>{{ report.description }}</td>
 
                 <td>
@@ -288,36 +458,28 @@
                         {% csrf_token %}
 
                         {% if report.status == 'DRAFT' %}
-                            <button type="submit"
-                                    name="status"
-                                    value="REPORTED"
+                            <button type="submit" name="status" value="REPORTED"
                                     class="btn btn-secondary btn-sm pixel-btn">
                                 Publish
                             </button>
                         {% endif %}
 
                         {% if report.status == 'REPORTED' %}
-                            <button type="submit"
-                                    name="status"
-                                    value="VERIFIED"
+                            <button type="submit" name="status" value="VERIFIED"
                                     class="btn btn-success btn-sm pixel-btn">
                                 Verify
                             </button>
                         {% endif %}
 
                         {% if report.status == 'VERIFIED' %}
-                            <button type="submit"
-                                    name="status"
-                                    value="IN_PROGRESS"
+                            <button type="submit" name="status" value="IN_PROGRESS"
                                     class="btn btn-primary btn-sm pixel-btn">
                                 Process
                             </button>
                         {% endif %}
 
                         {% if report.status == 'IN_PROGRESS' %}
-                            <button type="submit"
-                                    name="status"
-                                    value="RESOLVED"
+                            <button type="submit" name="status" value="RESOLVED"
                                     class="btn btn-dark btn-sm pixel-btn">
                                 Resolve
                             </button>
@@ -329,14 +491,33 @@
 
             {% empty %}
             <tr>
-                <td colspan="6" class="empty-row">
+                <td colspan="{% if user.is_admin %}6{% else %}5{% endif %}" class="empty-row">
                     Belum ada laporan
                 </td>
             </tr>
             {% endfor %}
-
             </tbody>
         </table>
+    </div>
+
+    <div class="pagination-pixel">
+        <button class="page-btn" id="prevBtn">◄ Prev</button>
+        <span id="pageInfo">Page 1 of 1</span>
+        <button class="page-btn" id="nextBtn">Next ►</button>
+    </div>
+
+    <div class="activity-box">
+        <h5 class="activity-title">Recent Activity</h5>
+
+        {% for report in reports|slice:":3" %}
+            <div class="activity-item">
+                + {{ report.title }} masuk status {{ report.status }}
+            </div>
+        {% empty %}
+            <div class="activity-item">
+                Belum ada aktivitas laporan.
+            </div>
+        {% endfor %}
     </div>
 
 </div>
@@ -347,7 +528,6 @@
 
             <div class="modal-header">
                 <h5 class="modal-title">Detail Laporan</h5>
-
                 <button type="button"
                         class="btn-close btn-close-white"
                         data-bs-dismiss="modal">
@@ -369,6 +549,19 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+    const isAdmin = "{{ user.is_admin|yesno:'true,false' }}" === "true";
+    const csrfToken = "{{ csrf_token }}";
+
+    const searchInput = document.getElementById("searchInput");
+    const reportTable = document.getElementById("reportTable");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const pageInfo = document.getElementById("pageInfo");
+
+    let currentFilter = "ALL";
+    let currentPage = 1;
+    const rowsPerPage = 5;
+    let timeout = null;
 
     function getStatusBadge(status) {
         let cls = "status-draft";
@@ -381,13 +574,60 @@ document.addEventListener("DOMContentLoaded", function() {
         return `<span class="pixel-badge ${cls}">${status}</span>`;
     }
 
+    function updateStats() {
+        const rows = Array.from(reportTable.querySelectorAll("tr[data-status]"));
+
+        document.getElementById("totalCount").innerText = rows.length;
+        document.getElementById("reportedCount").innerText =
+            rows.filter(row => row.dataset.status === "REPORTED").length;
+        document.getElementById("progressCount").innerText =
+            rows.filter(row => row.dataset.status === "IN_PROGRESS").length;
+        document.getElementById("resolvedCount").innerText =
+            rows.filter(row => row.dataset.status === "RESOLVED").length;
+    }
+
+    function getFilteredRows() {
+        const rows = Array.from(reportTable.querySelectorAll("tr[data-status]"));
+
+        if (currentFilter === "ALL") {
+            return rows;
+        }
+
+        return rows.filter(row => row.dataset.status === currentFilter);
+    }
+
+    function renderPagination() {
+        const rows = Array.from(reportTable.querySelectorAll("tr[data-status]"));
+        const filteredRows = getFilteredRows();
+
+        rows.forEach(row => row.style.display = "none");
+
+        const totalPages = Math.max(1, Math.ceil(filteredRows.length / rowsPerPage));
+
+        if (currentPage > totalPages) {
+            currentPage = totalPages;
+        }
+
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        filteredRows.slice(start, end).forEach(row => {
+            row.style.display = "";
+        });
+
+        pageInfo.innerText = `Page ${currentPage} of ${totalPages}`;
+
+        prevBtn.disabled = currentPage <= 1;
+        nextBtn.disabled = currentPage >= totalPages;
+    }
+
     function getStatusButton(report) {
         let statusBtn = "";
 
         if (report.status === "DRAFT") {
             statusBtn = `
                 <form method="POST" action="/reports/status/${report.id}/" class="d-inline">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
                     <button type="submit" name="status" value="REPORTED"
                             class="btn btn-secondary btn-sm pixel-btn">
                         Publish
@@ -399,7 +639,7 @@ document.addEventListener("DOMContentLoaded", function() {
         else if (report.status === "REPORTED") {
             statusBtn = `
                 <form method="POST" action="/reports/status/${report.id}/" class="d-inline">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
                     <button type="submit" name="status" value="VERIFIED"
                             class="btn btn-success btn-sm pixel-btn">
                         Verify
@@ -411,7 +651,7 @@ document.addEventListener("DOMContentLoaded", function() {
         else if (report.status === "VERIFIED") {
             statusBtn = `
                 <form method="POST" action="/reports/status/${report.id}/" class="d-inline">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
                     <button type="submit" name="status" value="IN_PROGRESS"
                             class="btn btn-primary btn-sm pixel-btn">
                         Process
@@ -423,7 +663,7 @@ document.addEventListener("DOMContentLoaded", function() {
         else if (report.status === "IN_PROGRESS") {
             statusBtn = `
                 <form method="POST" action="/reports/status/${report.id}/" class="d-inline">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
                     <button type="submit" name="status" value="RESOLVED"
                             class="btn btn-dark btn-sm pixel-btn">
                         Resolve
@@ -435,6 +675,75 @@ document.addEventListener("DOMContentLoaded", function() {
         return statusBtn;
     }
 
+    function renderRows(data) {
+        reportTable.innerHTML = "";
+
+        if (data.length === 0) {
+            reportTable.innerHTML = `
+                <tr>
+                    <td colspan="${isAdmin ? 6 : 5}" class="empty-row">
+                        Tidak ada data
+                    </td>
+                </tr>
+            `;
+            updateStats();
+            renderPagination();
+            return;
+        }
+
+        data.forEach(report => {
+            let actionColumn = "";
+
+            if (isAdmin) {
+                actionColumn = `
+                    <td>
+                        <button class="btn btn-info btn-sm detail-btn pixel-btn"
+                                data-id="${report.id}">
+                            Detail
+                        </button>
+
+                        <a href="/reports/edit/${report.id}/"
+                           class="btn btn-warning btn-sm pixel-btn">
+                            Edit
+                        </a>
+
+                        <form method="POST"
+                              action="/reports/delete/${report.id}/"
+                              class="d-inline"
+                              id="del-search-${report.id}">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
+                            <button type="button"
+                                    class="btn btn-danger btn-sm pixel-btn"
+                                    onclick="openConfirm(
+                                        'Yakin hapus laporan ini?',
+                                        document.getElementById('del-search-${report.id}')
+                                    )">
+                                Hapus
+                            </button>
+                        </form>
+
+                        ${getStatusButton(report)}
+                    </td>
+                `;
+            }
+
+            reportTable.innerHTML += `
+                <tr data-status="${report.status}">
+                    <td>${report.title}</td>
+                    <td>${report.description}</td>
+                    <td>${report.user ?? "-"}</td>
+                    <td>${getStatusBadge(report.status)}</td>
+                    <td>${report.created_at}</td>
+                    ${actionColumn}
+                </tr>
+            `;
+        });
+
+        currentPage = 1;
+        updateStats();
+        renderPagination();
+    }
+
     document.addEventListener("click", function(e) {
         if (e.target.classList.contains("detail-btn")) {
             const id = e.target.dataset.id;
@@ -442,81 +751,63 @@ document.addEventListener("DOMContentLoaded", function() {
             fetch(`/reports/api/report/${id}/`)
                 .then(res => res.json())
                 .then(data => {
-                    dTitle.innerText = data.title;
-                    dDesc.innerText = data.description;
-                    dLoc.innerText = data.location;
-                    dCat.innerText = data.category;
-                    dCreated.innerText = data.created_at;
-                    dStatus.innerHTML = getStatusBadge(data.status);
+                    document.getElementById("dTitle").innerText = data.title;
+                    document.getElementById("dDesc").innerText = data.description;
+                    document.getElementById("dLoc").innerText = data.location;
+                    document.getElementById("dCat").innerText = data.category;
+                    document.getElementById("dCreated").innerText = data.created_at;
+                    document.getElementById("dStatus").innerHTML = getStatusBadge(data.status);
 
-                    new bootstrap.Modal(detailModal).show();
+                    new bootstrap.Modal(document.getElementById("detailModal")).show();
                 });
         }
     });
 
-    let timeout = null;
+    document.querySelectorAll(".filter-chip").forEach(chip => {
+        chip.addEventListener("click", function() {
+            document.querySelectorAll(".filter-chip").forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+            this.classList.add("active");
+            currentFilter = this.dataset.filter;
+            currentPage = 1;
+            renderPagination();
+        });
+    });
 
     searchInput.addEventListener("keyup", function() {
         clearTimeout(timeout);
 
         timeout = setTimeout(() => {
-            const query = this.value;
+            const query = this.value.trim();
 
-            fetch(`/reports/api/search/?q=${query}`)
+            fetch(`/reports/api/search/?q=${encodeURIComponent(query)}`)
                 .then(res => res.json())
                 .then(data => {
-                    reportTable.innerHTML = "";
-
-                    if (data.length === 0) {
-                        reportTable.innerHTML = `
-                            <tr>
-                                <td colspan="6" class="empty-row">
-                                    Tidak ada data
-                                </td>
-                            </tr>
-                        `;
-                        return;
-                    }
-
-                    data.forEach(report => {
-                        reportTable.innerHTML += `
-                            <tr>
-                                <td>${report.title}</td>
-                                <td>${report.description}</td>
-                                <td>${report.user}</td>
-                                <td>${getStatusBadge(report.status)}</td>
-                                <td>${report.created_at}</td>
-                                <td>
-                                    <button class="btn btn-info btn-sm detail-btn pixel-btn"
-                                            data-id="${report.id}">
-                                        Detail
-                                    </button>
-
-                                    <a href="/reports/edit/${report.id}/"
-                                       class="btn btn-warning btn-sm pixel-btn">
-                                        Edit
-                                    </a>
-
-                                    <form method="POST"
-                                          action="/reports/delete/${report.id}/"
-                                          class="d-inline">
-                                        <input type="hidden"
-                                               name="csrfmiddlewaretoken"
-                                               value="{{ csrf_token }}">
-                                        <button class="btn btn-danger btn-sm pixel-btn">
-                                            Hapus
-                                        </button>
-                                    </form>
-
-                                    ${getStatusButton(report)}
-                                </td>
-                            </tr>
-                        `;
-                    });
+                    renderRows(data);
                 });
         }, 400);
     });
 
+    prevBtn.addEventListener("click", function() {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPagination();
+        }
+    });
+
+    nextBtn.addEventListener("click", function() {
+        const totalPages = Math.max(1, Math.ceil(getFilteredRows().length / rowsPerPage));
+
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderPagination();
+        }
+    });
+
+    updateStats();
+    renderPagination();
 });
 </script>
 
