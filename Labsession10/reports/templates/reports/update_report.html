@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Laporan
+{% endblock %}
+
+{% block content %}
+
+<style>
+    body{
+        background:
+            linear-gradient(rgba(5,10,25,0.68), rgba(5,10,25,0.82)),
+            url('https://c.tenor.com/lPsMNpUunr4AAAAd/minecraft-aesthetic-background.gif')
+            center center / cover no-repeat fixed !important;
+    }
+
+    .edit-wrap{
+        padding-bottom: 50px;
+        animation: pixelUp .7s ease;
+    }
+
+    .pixel-breadcrumb{
+        max-width: 980px;
+        margin: 0 auto 18px auto;
+        font-weight: 800;
+        text-transform: uppercase;
+        text-align: left;
+    }
+
+    .pixel-breadcrumb a{
+        color: #78ff5c;
+        text-decoration: none;
+    }
+
+    .pixel-title{
+        font-family: 'Cinzel', serif;
+        font-size: 2.4rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        color: white;
+        text-shadow: 4px 4px 0 #000;
+        margin-bottom: 22px;
+        max-width: 980px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+
+    .pixel-form-card{
+        background: rgba(18,18,18,0.92) !important;
+        border: 5px solid #111 !important;
+        border-radius: 0 !important;
+        box-shadow: 10px 10px 0 #000;
+        padding: 24px;
+        max-width: 980px;
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    .pixel-form-card label{
+        display: block;
+        font-weight: 900;
+        text-transform: uppercase;
+        color: white;
+        text-shadow: 2px 2px 0 #000;
+        margin-bottom: 8px;
+        text-align: left;
+    }
+
+    .pixel-form-card input,
+    .pixel-form-card textarea,
+    .pixel-form-card select{
+        width: 100%;
+        background: #252525 !important;
+        color: white !important;
+        border: 4px solid #111 !important;
+        border-radius: 0 !important;
+        box-shadow: inset 0 0 0 2px rgba(255,255,255,0.05);
+        font-weight: 700;
+        padding: 12px;
+    }
+
+    .pixel-form-card input:focus,
+    .pixel-form-card textarea:focus,
+    .pixel-form-card select:focus{
+        outline: none !important;
+        border-color: #78ff5c !important;
+        box-shadow:
+            inset 0 0 0 2px rgba(255,255,255,0.08),
+            0 0 18px rgba(120,255,92,0.25) !important;
+    }
+
+    .pixel-error{
+        color: #ff5c5c;
+        font-weight: 800;
+        margin-top: 6px;
+        text-align: left;
+    }
+
+    .pixel-actions{
+        max-width: 980px;
+        margin: 22px auto 0 auto;
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .pixel-btn{
+        border-radius: 0 !important;
+        border: 4px solid #111 !important;
+        box-shadow: 5px 5px 0 #000;
+        font-weight: 900;
+        text-transform: uppercase;
+        padding: 11px 22px;
+        transition: .2s ease;
+    }
+
+    .pixel-btn:hover{
+        transform: translateY(-4px);
+        box-shadow: 8px 8px 0 #000;
+    }
+
+    .pixel-update{
+        background: #ff9800 !important;
+        color: white !important;
+    }
+
+    .pixel-update:hover{
+        background: #ffc928 !important;
+        color: #111 !important;
+    }
+
+    .pixel-back{
+        background: #444 !important;
+        color: white !important;
+        text-decoration: none;
+    }
+
+    .pixel-back:hover{
+        background: #777 !important;
+        color: white !important;
+    }
+
+    @keyframes pixelUp{
+        from{
+            opacity: 0;
+            transform: translateY(35px);
+        }
+
+        to{
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<div class="edit-wrap">
+
+    <nav aria-label="breadcrumb" class="pixel-breadcrumb">
+        <a href="{% url 'home' %}">Home</a>
+        <span class="text-white"> / </span>
+        <a href="{% url 'report_list' %}">Reports</a>
+        <span class="text-white"> / Edit</span>
+    </nav>
+
+    <h2 class="pixel-title">
+        Edit Laporan
+    </h2>
+
+    <form method="POST" id="editForm">
+        {% csrf_token %}
+
+        <div class="pixel-form-card">
+
+            {% for field in form %}
+                <div class="mb-4">
+                    <label class="form-label">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% if field.errors %}
+                        <div class="pixel-error small">
+                            {{ field.errors|striptags }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="pixel-actions">
+
+            <button type="submit"
+                    class="btn pixel-btn pixel-update"
+                    id="submitBtn">
+
+                <span id="btnText">Update</span>
+
+                <span id="spinner"
+                      class="spinner-border spinner-border-sm d-none">
+                </span>
+
+            </button>
+
+            <a href="{% url 'report_list' %}"
+               class="btn pixel-btn pixel-back">
+                Kembali
+            </a>
+
+        </div>
+    </form>
+
+</div>
+
+<script>
+document.getElementById("editForm").addEventListener("submit", function () {
+    const btn = document.getElementById("submitBtn");
+    const text = document.getElementById("btnText");
+    const spinner = document.getElementById("spinner");
+
+    btn.disabled = true;
+    text.innerText = "Loading...";
+    spinner.classList.remove("d-none");
+});
+</script>
+
+{% endblock %}
