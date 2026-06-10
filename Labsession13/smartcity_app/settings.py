@@ -21,6 +21,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = [
+    "http://103.151.63.86:8009",
+]
 
 # =========================
 # INSTALLED APPS
