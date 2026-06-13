@@ -92,10 +92,18 @@ const routes = {
                     </h5>
 
                     <a href="#dashboard"
-                       class="menu-link menu-active">
+                    class="menu-link menu-active">
 
-                        <i class="bi bi-house-fill me-2"></i>
-                        Dashboard
+                        <i class="bi bi-person-lines-fill me-2"></i>
+                        Laporan Saya
+
+                    </a>
+
+                    <a href="#feed"
+                    class="menu-link">
+
+                        <i class="bi bi-globe2 me-2"></i>
+                        Feed Kota
 
                     </a>
 
@@ -265,7 +273,30 @@ const routes = {
 
     </div>
 
+    `,
+
+    "#feed": `
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <h2 class="fw-bold mb-4">
+                Feed Kota
+            </h2>
+
+            <div id="feedContent">
+
+                Memuat laporan...
+
+            </div>
+
+        </div>
+
+    </div>
+
     `
+
 };
 
 
@@ -906,6 +937,73 @@ async function deleteReport(reportId) {
 }
 
 
+async function loadFeed() {
+
+    try {
+
+        const response =
+            await requestAPI(
+                "/api/reports/?page=1"
+            );
+
+        const data =
+            await response.json();
+
+        const reports =
+            data.results
+            .filter(
+                report =>
+                report.status !== "DRAFT"
+            )
+            .sort(
+                (a, b) =>
+                b.id - a.id
+            );
+
+        document.getElementById(
+            "feedContent"
+        ).innerHTML =
+
+            reports.map(report => `
+
+                <div class="card mb-3">
+
+                    <div class="card-body">
+
+                        <h5>
+                            ${report.title}
+                        </h5>
+
+                        <p>
+                            ${report.description}
+                        </p>
+
+                        <small class="text-muted">
+
+                            Pelapor:
+                            ${report.reporter}
+
+                        </small>
+
+                        <span class="badge bg-primary ms-2">
+
+                            ${report.status}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            `).join("");
+
+    } catch(error) {
+
+        console.error(error);
+    }
+}
+
+
 function handleRouting() {
 
     const hash =
@@ -924,5 +1022,10 @@ function handleRouting() {
 
         setupDashboard();
         loadReports();
+    }
+
+    if (hash === "#feed") {
+
+    loadFeed();
     }
 }
