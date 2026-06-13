@@ -569,15 +569,21 @@ async function loadReports(page = 1) {
                 "reportList"
             ).innerHTML =
 
-                reports.map(report => `
+                reports
+                .sort((a, b) => {
+                    if (a.status === "DRAFT" && b.status !== "DRAFT") return -1;
+                    if (a.status !== "DRAFT" && b.status === "DRAFT") return 1;
+                    return b.id - a.id;
+                })
+                .map(report => `
 
-                    <div class="card mb-3">
+                    <div class="card mb-3 shadow-sm">
 
                         <div class="card-body">
 
                             <div class="d-flex justify-content-between align-items-start">
 
-                                <div>
+                                <div class="w-100">
 
                                     <h5 class="mb-2">
                                         ${report.title}
@@ -587,15 +593,60 @@ async function loadReports(page = 1) {
                                         ${report.description}
                                     </p>
 
-                                    <small class="text-muted">
+                                    <small class="text-muted d-block mb-2">
                                         📍 ${report.location || "-"}
                                     </small>
 
                                     ${
+                                        report.status !== "DRAFT"
+                                        ? `
+
+                                        <div class="progress mb-2"
+                                            style="height:20px;">
+
+                                            <div
+                                                class="progress-bar
+                                                ${
+                                                    report.status === "REPORTED"
+                                                    ? "bg-primary"
+                                                    : report.status === "VERIFIED"
+                                                    ? "bg-info"
+                                                    : report.status === "IN_PROGRESS"
+                                                    ? "bg-warning text-dark"
+                                                    : "bg-success"
+                                                }"
+
+                                                style="width:${
+                                                    report.status === "REPORTED"
+                                                    ? "25"
+                                                    : report.status === "VERIFIED"
+                                                    ? "50"
+                                                    : report.status === "IN_PROGRESS"
+                                                    ? "75"
+                                                    : "100"
+                                                }%;">
+
+                                                ${
+                                                    report.status === "REPORTED"
+                                                    ? "25%"
+                                                    : report.status === "VERIFIED"
+                                                    ? "50%"
+                                                    : report.status === "IN_PROGRESS"
+                                                    ? "75%"
+                                                    : "100%"
+                                                }
+
+                                            </div>
+
+                                        </div>
+
+                                        `
+                                        : ""
+                                    }
+
+                                    ${
                                         report.status === "DRAFT"
                                         ? `
-                                            <br>
-
                                             <button
                                                 class="btn btn-success btn-sm mt-2 me-1"
                                                 onclick="publishReport(${report.id})">
