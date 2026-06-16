@@ -17,13 +17,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 # =========================
 SECRET_KEY = 'django-insecure-j^xzx_fjtn1pqt&#zvmu138er+-z9o6y#73n_$o^z*ms2mb&r6'
+
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    "*",
+]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://103.151.63.86:8009",
+    "http://103.151.63.86:8009/",
 ]
+
 
 # =========================
 # INSTALLED APPS
@@ -40,7 +44,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
 
-    # custom apps
     'main_app',
     'about',
     'contacts',
@@ -218,3 +221,5 @@ SIMPLE_JWT = {
 # CORS SETTINGS
 # =========================
 CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_CREDENTIALS = True
