@@ -16,16 +16,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # =========================
 # SECURITY
 # =========================
-SECRET_KEY = 'django-insecure-j^xzx_fjtn1pqt&#zvmu138er+-z9o6y#73n_$o^z*ms2mb&r6'
+SECRET_KEY = (
+    'django-insecure-j^xzx_fjtn1pqt&#zvmu138er+-z9o6y'
+    '#73n_$o^z*ms2mb&r6'
+)
 
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "*",
+    '*',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://103.151.63.86:8009/",
+    'http://103.151.63.86:8009',
 ]
 
 
@@ -33,6 +36,7 @@ CSRF_TRUSTED_ORIGINS = [
 # INSTALLED APPS
 # =========================
 INSTALLED_APPS = [
+    # Django internal apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,10 +44,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Third-party apps
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
 
+    # OpenAPI documentation
+    'drf_spectacular',
+    'django_scalar',
+
+    # Project apps
     'main_app',
     'about',
     'contacts',
@@ -57,17 +67,15 @@ INSTALLED_APPS = [
 # MIDDLEWARE
 # =========================
 MIDDLEWARE = [
+    # CORS harus ditempatkan sebelum CommonMiddleware
     'corsheaders.middleware.CorsMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -84,7 +92,9 @@ ROOT_URLCONF = 'smartcity_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [
+            BASE_DIR / 'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,7 +135,7 @@ AUTH_USER_MODEL = 'usermanagement_24782059.CustomUser'
 
 
 # =========================
-# AUTH BACKENDS
+# AUTHENTICATION BACKENDS
 # =========================
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -137,16 +147,28 @@ AUTHENTICATION_BACKENDS = [
 # =========================
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'MinimumLengthValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'CommonPasswordValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'NumericPasswordValidator'
+        ),
     },
 ]
 
@@ -194,14 +216,20 @@ MESSAGE_TAGS = {
 
 
 # =========================
-# DRF + JWT
+# DJANGO REST FRAMEWORK
 # =========================
 REST_FRAMEWORK = {
+    # Menggunakan drf-spectacular untuk menghasilkan OpenAPI Schema
+    'DEFAULT_SCHEMA_CLASS': (
+        'drf_spectacular.openapi.AutoSchema'
+    ),
+
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
 
+    # Autentikasi API menggunakan JWT Bearer Token
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
@@ -214,6 +242,31 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+
+    'AUTH_HEADER_TYPES': (
+        'Bearer',
+    ),
+}
+
+
+# =========================
+# OPENAPI / DRF SPECTACULAR
+# =========================
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Smart City Portal API',
+
+    'DESCRIPTION': (
+        'Dokumentasi REST API resmi untuk Portal Pelaporan '
+        'Laporan Warga'
+    ),
+
+    'VERSION': '1.0.0',
+
+    # Endpoint schema tidak dimunculkan sebagai endpoint API biasa
+    'SERVE_INCLUDE_SCHEMA': False,
+
+    # Mengurutkan endpoint berdasarkan nama/path
+    'SORT_OPERATIONS': True,
 }
 
 

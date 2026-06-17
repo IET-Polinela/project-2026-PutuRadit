@@ -13,6 +13,13 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+# OPENAPI DOCUMENTATION
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularSwaggerView,
+)
+from django_scalar.views import scalar_viewer
+
 
 urlpatterns = [
 
@@ -45,6 +52,33 @@ urlpatterns = [
     path(
         'reports/',
         include('reports.urls')
+    ),
+
+    # =========================
+    # OPENAPI DOCUMENTATION
+    # =========================
+
+    # Skema OpenAPI mentah dalam format YAML/JSON
+    path(
+        'api/schema/',
+        SpectacularAPIView.as_view(),
+        name='schema'
+    ),
+
+    # Dokumentasi Swagger UI
+    path(
+        'api/docs/swagger/',
+        SpectacularSwaggerView.as_view(
+            url_name='schema'
+        ),
+        name='swagger-ui'
+    ),
+
+    # Dokumentasi Scalar UI
+    path(
+        'api/docs/scalar/',
+        scalar_viewer,
+        name='scalar-ui'
     ),
 
     # =========================
