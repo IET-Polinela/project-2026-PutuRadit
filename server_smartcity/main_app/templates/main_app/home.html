@@ -250,37 +250,99 @@
     }
 
     @media (max-width: 768px) {
-        .minecraft-hero { padding: 0 20px; }
 
-        .pixel-title {
-            font-size: 2.6rem;
-            letter-spacing: 3px;
+        .minecraft-hero {
+            min-height: auto;
+            padding: 80px 15px 140px;
         }
 
-        .hero-subtitle { font-size: 1.3rem; }
-        .hero-desc { font-size: 1rem; }
+        .hero-content {
+            margin-bottom: 30px;
+        }
 
-        .cloud3, .cloud5, .cloud6,
-        .tree-left-small,
-        .tree-mid-small,
-        .tree-mid-medium {
+        .pixel-title {
+            font-size: 2rem;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .hero-desc {
+            font-size: .95rem;
+            line-height: 1.7;
+            max-width: 100%;
+            padding: 0 10px;
+        }
+
+        .pixel-btn {
+            margin-top: 25px;
+            padding: 14px 24px;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 260px;
+        }
+
+        .cloud2,
+        .cloud3,
+        .cloud5,
+        .cloud6 {
             display: none;
         }
 
+        .cloud1 {
+            width: 120px;
+            height: 40px;
+            left: 5%;
+            top: 12%;
+        }
+
+        .cloud4 {
+            width: 90px;
+            height: 32px;
+            right: 5%;
+            top: 18%;
+            left: auto;
+        }
+
         .forest {
-            height: 190px;
+            height: 120px;
             bottom: 70px;
         }
 
+        .tree-left-small,
+        .tree-mid-small,
+        .tree-mid-medium,
+        .tree-right-medium {
+            display: none;
+        }
+
         .tree-left-big {
-            left: -25%;
-            transform: scale(.7);
+            left: -35%;
+            transform: scale(.45);
         }
 
         .tree-right-big {
-            right: -20%;
-            transform: scale(.7);
+            right: -35%;
+            transform: scale(.45);
         }
+
+        .pixel-ground {
+            height: 70px;
+        }
+    }
+
+    html,
+    body {
+        overflow-x: hidden;
+    }
+
+    * {
+        box-sizing: border-box;
     }
 </style>
 
