@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+db.sqlite3
+
+node_modules/
+playwright-report/
+test-results/
+htmlcov/
+.coverage
+
+lab15-tests/

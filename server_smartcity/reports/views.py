@@ -297,6 +297,9 @@ def report_search_api(request):
     query = request.GET.get('q', '')
     user = request.user
 
+    if not user.is_authenticated:
+        return JsonResponse({'results': []}, status=200)
+
     reports = Report.objects.filter(
         Q(title__icontains=query) |
         Q(description__icontains=query) |

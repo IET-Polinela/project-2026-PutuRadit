@@ -97,3 +97,42 @@ class ReportViewSet(viewsets.ModelViewSet):
             *args,
             **kwargs
         )
+
+
+# LAB15 PATCH START
+from django.db.models import Q as _LAB15_Q
+
+def _lab15_status_value(name, default):
+    status_cls = getattr(Report, "Status", None)
+    return getattr(status_cls, name, default) if status_cls else default
+
+def _lab15_report_queryset(self):
+    qs = Report.objects.all().order_by("-created_at")
+    user = self.request.user
+    tab = self.request.query_params.get("tab")
+
+    draft_value = _lab15_status_value("DRAFT", "DRAFT")
+
+    if tab == "feed":
+        return qs.exclude(status=draft_value)
+
+    if not user or not user.is_authenticated:
+        return qs.none()
+
+    if tab == "my_reports":
+        return qs.filter(reporter=user)
+
+    return qs.filter(_LAB15_Q(reporter=user) | ~_LAB15_Q(status=draft_value))
+
+def _lab15_report_perform_create(self, serializer):
+    save_kwargs = {"reporter": self.request.user}
+
+    # Di model kamu ada field user dan reporter, jadi isi dua-duanya saat create via API.
+    if hasattr(Report, "user"):
+        save_kwargs["user"] = self.request.user
+
+    serializer.save(**save_kwargs)
+
+ReportViewSet.get_queryset = _lab15_report_queryset
+ReportViewSet.perform_create = _lab15_report_perform_create
+# LAB15 PATCH END

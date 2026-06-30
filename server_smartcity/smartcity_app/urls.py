@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
+from django.shortcuts import redirect
 
 from usermanagement_24782059.views import (
     LoginView,
@@ -21,6 +22,10 @@ from drf_spectacular.views import (
 from django_scalar.views import scalar_viewer
 
 
+def redirect_to_real_dashboard(request):
+    return redirect('/reports/dashboard/')
+
+
 urlpatterns = [
 
     # =========================
@@ -29,6 +34,15 @@ urlpatterns = [
     path(
         'admin/',
         admin.site.urls
+    ),
+
+    # =========================
+    # DASHBOARD ALIAS FOR LAB 15 PLAYWRIGHT
+    # =========================
+    path(
+        'dashboard/',
+        redirect_to_real_dashboard,
+        name='dashboard'
     ),
 
     # =========================
@@ -57,15 +71,12 @@ urlpatterns = [
     # =========================
     # OPENAPI DOCUMENTATION
     # =========================
-
-    # Skema OpenAPI mentah dalam format YAML/JSON
     path(
         'api/schema/',
         SpectacularAPIView.as_view(),
         name='schema'
     ),
 
-    # Dokumentasi Swagger UI
     path(
         'api/docs/swagger/',
         SpectacularSwaggerView.as_view(
@@ -74,7 +85,6 @@ urlpatterns = [
         name='swagger-ui'
     ),
 
-    # Dokumentasi Scalar UI
     path(
         'api/docs/scalar/',
         scalar_viewer,
