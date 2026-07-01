@@ -37,7 +37,7 @@ class DashboardView(TemplateView):
 # =========================
 # LIST REPORT
 # =========================
-class ReportListView(LoginRequiredMixin, ListView):
+class ReportListView(ListView):
     model = Report
     template_name = 'reports/report_list.html'
     context_object_name = 'reports'
@@ -45,9 +45,16 @@ class ReportListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user = self.request.user
 
-        # Semua user login, termasuk admin:
-        # - bisa lihat semua laporan NON-DRAFT
-        # - bisa lihat DRAFT hanya miliknya sendiri
+        # User belum login:
+        # hanya bisa melihat laporan publik / NON-DRAFT
+        if not user.is_authenticated:
+            return Report.objects.exclude(
+                status=Report.Status.DRAFT
+            ).order_by('-created_at')
+
+        # User login:
+        # bisa melihat semua laporan NON-DRAFT
+        # dan DRAFT miliknya sendiri
         return Report.objects.filter(
             Q(status=Report.Status.DRAFT, reporter=user) |
             ~Q(status=Report.Status.DRAFT)
@@ -207,14 +214,13 @@ class ReportUpdateStatusView(LoginRequiredMixin, View):
 def report_detail_api(request, id):
     report = get_object_or_404(Report, id=id)
 
-    if (
-        report.status == Report.Status.DRAFT
-        and report.reporter != request.user
-    ):
-        return JsonResponse(
-            {"error": "Akses ditolak! Laporan DRAFT hanya bisa dilihat pemiliknya."},
-            status=403
-        )
+    # DRAFT hanya boleh dilihat pemiliknya
+    if report.status == Report.Status.DRAFT:
+        if not request.user.is_authenticated or report.reporter != request.user:
+            return JsonResponse(
+                {"error": "Akses ditolak! Laporan DRAFT hanya bisa dilihat pemiliknya."},
+                status=403
+            )
 
     data = {
         "title": report.title,
@@ -234,10 +240,16 @@ def report_detail_api(request, id):
 def report_status_data(request):
     user = request.user
 
-    reports = Report.objects.filter(
-        Q(status=Report.Status.DRAFT, reporter=user) |
-        ~Q(status=Report.Status.DRAFT)
-    )
+    # Belum login: hanya hitung laporan publik / NON-DRAFT
+    if not user.is_authenticated:
+        reports = Report.objects.exclude(status=Report.Status.DRAFT)
+
+    # Sudah login: hitung semua NON-DRAFT + DRAFT miliknya sendiri
+    else:
+        reports = Report.objects.filter(
+            Q(status=Report.Status.DRAFT, reporter=user) |
+            ~Q(status=Report.Status.DRAFT)
+        )
 
     data = (
         reports.values('status')
@@ -254,10 +266,16 @@ def report_status_data(request):
 def report_category_data(request):
     user = request.user
 
-    reports = Report.objects.filter(
-        Q(status=Report.Status.DRAFT, reporter=user) |
-        ~Q(status=Report.Status.DRAFT)
-    )
+    # Belum login: hanya hitung laporan publik / NON-DRAFT
+    if not user.is_authenticated:
+        reports = Report.objects.exclude(status=Report.Status.DRAFT)
+
+    # Sudah login: hitung semua NON-DRAFT + DRAFT miliknya sendiri
+    else:
+        reports = Report.objects.filter(
+            Q(status=Report.Status.DRAFT, reporter=user) |
+            ~Q(status=Report.Status.DRAFT)
+        )
 
     data = (
         reports.values('category')
@@ -297,9 +315,6 @@ def report_search_api(request):
     query = request.GET.get('q', '')
     user = request.user
 
-    if not user.is_authenticated:
-        return JsonResponse({'results': []}, status=200)
-
     reports = Report.objects.filter(
         Q(title__icontains=query) |
         Q(description__icontains=query) |
@@ -307,10 +322,16 @@ def report_search_api(request):
         Q(location__icontains=query)
     )
 
-    reports = reports.filter(
-        Q(status=Report.Status.DRAFT, reporter=user) |
-        ~Q(status=Report.Status.DRAFT)
-    )
+    # Belum login: search hanya laporan publik / NON-DRAFT
+    if not user.is_authenticated:
+        reports = reports.exclude(status=Report.Status.DRAFT)
+
+    # Sudah login: search semua NON-DRAFT + DRAFT miliknya sendiri
+    else:
+        reports = reports.filter(
+            Q(status=Report.Status.DRAFT, reporter=user) |
+            ~Q(status=Report.Status.DRAFT)
+        )
 
     reports = reports.order_by('-created_at')[:50]
 
